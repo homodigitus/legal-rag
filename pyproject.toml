@@ -23,6 +23,7 @@ dependencies = [
     "pydantic>=2.9.0",
     "agno",
     "openai>=3.0.0",
+    "torchvision>=0.28.0",
 ]
 
 [dependency-groups]

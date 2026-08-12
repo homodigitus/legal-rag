@@ -32,6 +32,9 @@ RUN uv sync --no-dev
 
 ENV PATH="/app/.venv/bin:$PATH"
 
+# Chroma + agent chat history bu dizinlerde persist ediliyor (volume ile disaridan da baglanabilir)
+RUN mkdir -p /app/db /app/data/raw /app/data/processed
+
 EXPOSE 8501
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s \

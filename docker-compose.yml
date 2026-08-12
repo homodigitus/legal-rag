@@ -3,28 +3,26 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: eksun-legal-rag-app
+    container_name: legal-rag-app
     ports:
       - "8501:8501"
     env_file:
       - .env
     environment:
-      # Container icinden host'ta calisan Ollama'ya erismek icin
-      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      # Container icinden host'ta veya ollama servisinde calisan Ollama'ya erismek icin
+      - OLLAMA_BASE_URL=http://ollama:11434
     volumes:
       - ./data:/app/data
-      - ./db/chroma_store:/app/db/chroma_store
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - ./db:/app/db  # ChromaDB + agent_history.db (SQLite, chat history) burada persist edilir
     depends_on:
-      - ollama
+      ollama-init:
+        condition: service_completed_successfully
     restart: unless-stopped
 
-  # Yerel LLM servisi (istege bagli: host'ta zaten Ollama kuruluysa bu servisi
-  # docker-compose.yml'den kaldirip OLLAMA_BASE_URL'i host'a yonlendirebilirsin)
+  # Yerel LLM + embedding servisi
   ollama:
     image: ollama/ollama:latest
-    container_name: eksun-legal-rag-ollama
+    container_name: legal-rag-ollama
     ports:
       - "11434:11434"
     volumes:
@@ -38,6 +36,28 @@ services:
     #         - driver: nvidia
     #           count: all
     #           capabilities: [gpu]
+
+  # Ollama ayaga kalktiktan sonra gerekli modelleri bir kere ceker, sonra cikar.
+  # app servisi bu isin bitmesini bekler (depends_on: service_completed_successfully).
+  ollama-init:
+    image: ollama/ollama:latest
+    container_name: legal-rag-ollama-init
+    depends_on:
+      - ollama
+    volumes:
+      - ollama_models:/root/.ollama
+    entrypoint: ["/bin/sh", "-c"]
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    command: >
+      "until ollama list >/dev/null 2>&1; do
+        echo 'Ollama servisi bekleniyor...'; sleep 2;
+      done;
+      ollama pull ${OLLAMA_MODEL:-gemma4:e2b-it-qat};
+      ollama pull ${OLLAMA_EMBEDDING_MODEL:-leoipulsar/harrier-0.6b};
+      echo 'Modeller hazir.'"
+    env_file:
+      - .env
 
 volumes:
   ollama_models:
