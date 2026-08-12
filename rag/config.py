@@ -13,12 +13,14 @@ load_dotenv()
 class Settings:
     # LLM
     ollama_base_url: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-    ollama_model: str = os.getenv("OLLAMA_MODEL", "llama3.1:8b")
+    ollama_model: str = os.getenv("OLLAMA_MODEL", "gemma4:e2b-it-qat")
 
     # Embedding
     hf_api_token: str = os.getenv("HF_API_TOKEN", "")
     embedding_model: str = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
     embedding_device: str = os.getenv("EMBEDDING_DEVICE", "cpu")
+    ollama_embedding_model: str = os.getenv("OLLAMA_EMBEDDING_MODEL", "leoipulsar/harrier-0.6b")
+    ollama_embedding_dimensions: int = int(os.getenv("OLLAMA_EMBEDDING_DIMENSIONS", "1024"))
 
     # Vector DB
     chroma_persist_dir: str = os.getenv("CHROMA_PERSIST_DIR", "./db/chroma_store")
