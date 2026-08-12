@@ -1,0 +1,44 @@
+# --- Ortam ---
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.python-version.local
+
+# --- uv ---
+uv.lock.local
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+notebooks/**/*.html
+
+# --- Veri (buyuk dosyalar repo'ya girmesin) ---
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# --- Vektor DB ---
+db/chroma_store/
+db/*.sqlite3
+
+# --- Streamlit ---
+.streamlit/secrets.toml
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Test/coverage ---
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- Ruff ---
+.ruff_cache/
