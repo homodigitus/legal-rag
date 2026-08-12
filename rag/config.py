@@ -16,6 +16,7 @@ class Settings:
     ollama_model: str = os.getenv("OLLAMA_MODEL", "llama3.1:8b")
 
     # Embedding
+    hf_api_token: str = os.getenv("HF_API_TOKEN", "")
     embedding_model: str = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
     embedding_device: str = os.getenv("EMBEDDING_DEVICE", "cpu")
 
