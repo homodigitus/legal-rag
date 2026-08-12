@@ -63,7 +63,7 @@ zorunlu değil, zaman kalırsa "ileri vizyon" bölümünde gösterilebilir.
 ## Proje Yapısı
 
 ```
-eksun-legal-rag/
+legal-rag/
 ├── app/                    # Streamlit demo uygulaması
 │   ├── streamlit_app.py    # Ana giriş noktası
 │   ├── pages/               # (opsiyonel) çoklu sayfa
@@ -109,7 +109,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ### 2. Bağımlılıkları kur
 ```bash
-cd eksun-legal-rag
+cd legal-rag
 uv sync              # sadece runtime bağımlılıkları
 uv sync --all-extras # dev bağımlılıkları da (jupyter, pytest, ruff) dahil
 ```

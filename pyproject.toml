@@ -1,5 +1,5 @@
 [project]
-name = "eksun-legal-rag"
+name = "legal-rag"
 version = "0.1.0"
 description = "Yerel LLM ile Hukuki Metin Analizi - RAG tabanli sozlesme QA sistemi (CUAD dataset)"
 readme = "README.md"
@@ -21,6 +21,7 @@ dependencies = [
     "pypdf>=4.3.1",
     "tqdm>=4.66.5",
     "pydantic>=2.9.0",
+    "agno",
 ]
 
 [dependency-groups]
