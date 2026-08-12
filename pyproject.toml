@@ -22,6 +22,7 @@ dependencies = [
     "tqdm>=4.66.5",
     "pydantic>=2.9.0",
     "agno",
+    "openai>=3.0.0",
 ]
 
 [dependency-groups]
